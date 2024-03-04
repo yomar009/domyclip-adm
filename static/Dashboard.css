@@ -1,0 +1,273 @@
+.hidden {
+  display: none;
+}
+
+.main {
+  background-color: #1c1c1c;
+  grid-area: main;
+  display: grid;
+}
+
+.circulo {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background-color: #fff;
+  border: 4px solid #666666;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.titulo h1 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centro horizontal */
+  background-color: #f6f6f6; /* Color de fondo gris */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 15px; /* Espacio alrededor del contenedor */
+  margin-top: 5px; /* Espacio superior */
+  margin-bottom: 5px; /* Espacio inferior */
+}
+
+/* -------------------------- Estilos para la sección "Estadisticas"------- */
+
+.estadísticas-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
+    "a1 a1 a1 a2"
+    "a1 a1 a1 a2"
+    "a3 a4 a5 a6";
+  width: 100%; /* Toma todo el ancho de la página */
+}
+.est:nth-child(1) {
+  grid-area: a1;
+}
+.est:nth-child(2) {
+  grid-area: a2;
+}
+.est:nth-child(3) {
+  grid-area: a3;
+}
+.est:nth-child(4) {
+  grid-area: a4;
+}
+.est:nth-child(5) {
+  grid-area: a5;
+}
+.est:nth-child(6) {
+  grid-area: a6;
+}
+
+.est {
+  background-color: #f6f6f6;
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 10px; /* Espacio alrededor del contenedor */
+  margin: 10px; /* Espacio inferior */
+}
+
+/* car c6 botones */
+
+.a6 {
+  display: flex;
+  flex-direction: column; /* Alinea los elementos verticalmente */
+}
+
+/* ---------------------- propietarios ---------------------------- */
+
+.propietarios-section {
+  display: grid;
+  gap: 20px;
+}
+
+.botones-bloque {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centro horizontal */
+  background-color: #f6f6f6; /* Color de fondo gris */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 15px; /* Espacio alrededor del contenedor */
+  margin-top: 5px; /* Espacio superior */
+  margin-bottom: 5px; /* Espacio inferior */
+}
+
+.bloque-btn {
+  background-color: #1976d2; /* Color de fondo del botón */
+  color: #f6f6f6; /* Color del texto del botón */
+  font-size: 17px; /* Ajustamos el tamaño del texto */
+  border: none;
+  border-radius: 10px; /* Borde redondeado del botón */
+  padding: 20px 20px; /* Espaciado interno del botón */
+  margin-bottom: 20px; /* Espacio entre botones */
+  margin-right: 20px; /* Espacio entre botones */
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out; /* Transición suave */
+  display: flex; /* Para que el contenido del botón sea flexible */
+  align-items: center; /* Para alinear verticalmente el contenido del botón */
+}
+
+.icon-container {
+  margin-right: 10px; /* Espacio entre el icono y el texto del botón */
+  font-size: 30px;
+}
+
+.bloque-btn:hover {
+  background-color: #75baff; /* Color de fondo del botón al pasar el ratón */
+}
+
+.prop {
+  background-color: #f6f6f6;
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 10px; /* Espacio alrededor del contenedor */
+  margin: 10px; /* Espacio inferior */
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.col-md-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+.contenido {
+  display: flex;
+  align-items: center;
+}
+
+.texto {
+  flex: 80%; /* Ocupa el 70% del espacio */
+  font-size: 16px; /* Ajustamos el tamaño del texto */
+  line-height: 1; /* Reducimos el espacio entre líneas */
+  overflow: auto; /* Agregar scroll si el contenido excede el tamaño */
+}
+.texto p {
+  line-height: 0.5; /* Aplicamos el espacio entre líneas específicamente a los elementos p dentro de .texto */
+}
+
+.cont_boton {
+  flex: 20%; /* Ocupa el 30% del espacio */
+  text-align: right; /* Alinea el contenido del botón a la derecha */
+  display: flex; /* Hacer flexibles los elementos dentro del botón */
+  align-items: center; /* Centrar verticalmente el contenido */
+  justify-content: center; /* Alinear el contenido del botón al final */
+}
+
+.cont_boton i {
+  font-size: 30px; /* Ajustamos el tamaño del icono */
+  margin-right: 10px; /* Espacio entre el icono y el texto */
+}
+
+.boton {
+  background-color: #1976d2;
+  color: white; /* Color azul para el texto y el icono */
+  border: none; /* Quitamos el borde */
+  border-radius: 10px; /* Borde redondeado del botón */
+  padding: 15px 15px; /* Espaciado interno del botón */
+  font-size: 20px; /* Ajustamos el tamaño del texto */
+  cursor: pointer;
+  transition: color 0.3s ease-in-out; /* Transición suave */
+  display: flex; /* Para alinear el icono con el texto */
+  align-items: center; /* Centra verticalmente el contenido */
+  justify-content: center;
+  height: 100%;
+  margin-bottom: 10px; /* Espacio entre botones */
+}
+
+.boton:hover {
+  background-color: #75baff;
+}
+
+/* Estilos para el modal de edición de propietarios */
+.modal {
+  display: none; /* Por defecto, el modal está oculto */
+  position: fixed; /* Permite que el modal esté posicionado encima del contenido */
+  z-index: 1000; /* Asegura que el modal esté encima de otros elementos */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Permite el desplazamiento si el contenido del modal es demasiado grande */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* Fondo semi-transparente para enfocar la atención en el modal */
+}
+
+.modal-content {
+  background-color: #fefefe; /* Fondo del modal */
+  margin: 5% auto; /* Centra el modal verticalmente y lo desplaza un poco hacia la derecha */
+  padding: 20px;
+  border: 1px solid #888; /* Borde del modal */
+  border-radius: 10px;
+  width: 50%; /* Ancho del modal */
+  max-width: 600px; /* Ancho máximo del modal */
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Estilos para los campos del formulario en el modal */
+label {
+  margin-top: 10px;
+  display: block;
+}
+
+input[type="text"],
+input[type="email"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 1000px) {
+  .sidebar {
+    display: block;
+    width: 100%; /* Ajusta el ancho de la barra lateral en dispositivos más pequeños */
+    transition: none; /* Desactiva la transición para dispositivos más pequeños */
+  }
+
+  .estadísticas-section {
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto auto auto auto;
+    grid-template-areas: "a1" "a2" "a3" "a4" "a5" "a6";
+  }
+  .a1 {
+    height: 400px;
+  }
+
+  .a2 {
+    width: 90%;
+    height: 400px;
+  }
+
+  .contenido {
+    display: grid;
+    justify-content: stretch; /* Alinear horizontalmente a la izquierda */
+    flex-direction: column; /* Cambiamos la dirección de los elementos a vertical */
+  }
+
+  .cont_boton {
+    width: 100%; /* Tomar todo el ancho del contenedor */
+    text-align: center; /* Centramos el botón */
+    margin-top: 10px; /* Añadimos un poco de espacio arriba del botón */
+  }
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesint.css') }}">
+    <title>Registro de Usuario</title>
+</head>
+<body>
+
+    <div class="login">
+        <img src="{{ url_for('static', filename='bg.jpg') }}" alt="Fondo">
+        <h3>Registro de Usuario</h3>
+        <h2>Regístrate</h2>
+        <form action="/registro" method="POST" class="login-form">
+
+            <input type="text" name="username" placeholder="Introduce tu Usuario" required>
+            <input type="password" name="password" placeholder="Introduce la Contraseña" required>
+            <input type="password" name="confirm_password" placeholder="Confirmación de Contraseña" required>
+
+            <button type="submit">Registrarse</button>
+            <!--Crear datos con edificio_id -->
+            {% if error %}
+            <p class="error-message">{{ error }}</p>
+            {% endif %}
+        </form>
+    </div>
+    
+</body>
+</html>

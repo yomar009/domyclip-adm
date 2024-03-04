@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesint.css') }}">
+    <title>Ingreso a Domyclip</title>
+
+</head>
+<body>
+
+    <div class="login">
+        <img src="{{ url_for('static', filename='bg.jpg') }}" alt="Fondo">
+        <h3>¡Bienvenido de nuevo a Domyclip!</h3>
+        <h2>Ingresa</h2>
+        <form action="{{ url_for('login') }}" method="post" class="login-form">
+            <!-- Campo ocultado nombre de usuario -->
+            <input type="text" name="username" placeholder="Introduce tu Usuario">
+            <input type="password" name="password" placeholder="Introduce tu Contraseña" required>
+            <button type="submit">Ingresar</button>
+            <a href="#">Olvidaste tu contraseña?</a>
+            <a href="/registro">--- Registrate ---</a>
+
+            {% if error_message %}
+            <p class="error-message">{{ error_message }}</p>
+            {% endif %}
+        </form>
+    </div>
+    
+</body>
+</html>

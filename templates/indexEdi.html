@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesEdi.css') }}">
+    <title>Inicio Edificios</title>
+</head>
+
+<body>
+
+    <!-- Contenido principal -->
+    <header class="header">
+        <div class="icon">
+            <i class="fas fa-code"></i>
+        </div>
+        <div class="text">
+            <h1>Domy<span>clip</span></h1>
+            <h2>Profesionales en finansas y technologia</h2>
+        </div>
+        <div class="icon">
+            <i class="fas fa-user"></i>
+            <h2>{{ session['username'] }}</h2>
+        </div>
+        <div class="icon">
+            <a href="{{ url_for('logout') }}">
+                <i class="fas fa-sign-out-alt"></i>
+                <h2>Salir</h2>
+            </a>
+        </div>
+
+    </header>
+
+
+
+
+    <!-- Sección de Botones -->
+    <div class="insights">
+        <!-- Botones -->
+        {% for edificio in edificios %}
+        <a href="{{ url_for('estadisticas', edificio_id=edificio[0]) }}" class="card card-{{ loop.index }}">
+            <div class="icon-container">
+                <i class="fas fa-building"></i>
+            </div>
+            <div class="info">
+                <h3>{{ edificio[1] }}</h3> <!-- Acceder al nombre del edificio -->
+                <p class="id">ID: {{ edificio[0] }}</p> <!-- Acceder al ID del edificio -->
+                <p class="apartamentos">Apartamentos: {{ edificio[2] }}</p> <!-- Acceder al número de apartamentos -->
+                <p class="direccion">Dirección: {{ edificio[3] }}</p> <!-- Acceder a la dirección del edificio -->
+                <p class="nit">NIT: {{ edificio[4] }}</p> <!-- Acceder al NIT del edificio -->
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+        <!-- Repite los siguientes botones según sea necesario -->
+
+</body>
+
+</html>

@@ -1,0 +1,169 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #e6e6e6;
+}
+
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 5%; /* Agrega espacio en la parte superior */
+    margin-bottom: 5%; /* Agrega espacio en la parte inferior */
+}
+
+.header .icon {
+    margin: 0 30px; /* Separacion del icono del texto */
+}
+.header .icon i {
+    font-size: 70px; /* Tamaño del icono */
+    color: #1976D2; /* Color del icono */
+    
+}
+.header .text {
+    text-align: left;
+}
+.header .icon a {
+    text-decoration: none; /* Elimina el subrayado del enlace */
+}
+
+.header .icon :hover {
+    color: #344f69; /* Cambia el color al pasar el mouse sobre el enlace */
+}
+
+.header h1,
+.header h2 {
+    margin: 0;
+    font-size: 30px; /* Ajusta el tamaño según tu preferencia */
+}
+
+.header h1 span {
+    color: #1976D2; /* Color diferente para "Corp" */
+}
+
+.header h2 {
+    color: #333; /* Color del texto principal */
+}
+
+
+
+
+
+
+
+.insights {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly; /* Cambia a "center" para centrar las tarjetas horizontalmente */
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.card {
+    display:  flex;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 20px; /* Ancho de la ventana */
+    padding: 10px; /* Aumentado para más espacio vertical */
+    margin-bottom: 20px;
+    flex: 0 1 calc(33% - 2%); /* Ajustado para dejar más espacio entre tarjetas */
+    box-sizing: border-box;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+
+    text-decoration: none; /* Elimina el subrayado */
+}
+
+.card .icon-container {
+    display: flex;
+    align-items: center;
+    margin-right: 4%; /* Ajusta el espacio entre el icono y el texto según tu preferencia */
+}
+
+.card .icon-container i {
+    font-size: 80px; /* Ajusta el tamaño del icono según tu preferencia */
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e4e4e4; /* Color de fondo del icono */
+}
+.card .info {
+    text-align: left;
+}
+
+.card-1 .icon-container i {
+    color: #CFE8FF;
+    background-color: #1976D2;
+}
+
+.card-2 .icon-container i {
+    color: #BBF7D0;
+    background-color: #388E3C;
+}
+
+.card-3 .icon-container i {
+    color: #FFF2C6;
+    background-color: #FF9800;
+}
+
+.card-4 .icon-container i {
+    color: #FECDD3;
+    background-color: #E91E63;
+}
+
+.card-5 .icon-container i {
+    color: #d9c2ff;
+    background-color: #673AB7;
+}
+
+.card-6 .icon-container i {
+    color: #f9b5ff;
+    background-color: #ea07ff;
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 20px; /* Tamaño del texto */
+    color: #333;
+}
+
+.card p {
+    margin: 0;
+    color: #777;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* Media query para pantallas más pequeñas, ajusta según sea necesario */
+@media (max-width: 768px) {
+    .insights {
+        justify-content: center;
+    }
+
+    .card {
+        flex: 0 1 calc(100% - 10%);
+    }
+    .header .icon {
+        margin-right: 10px; /* Separacion del icono del texto */
+    }
+    .header .icon i {
+        font-size: 40px; /* Tamaño del icono */
+    }
+    .header h2 {
+        font-size: 15px; /* Ajusta el tamaño según tu preferencia */
+    }
+    .header h1,
+    .header h2 {
+    font-size: 15px; /* Ajusta el tamaño según tu preferencia */
+    }
+
+
+}
