@@ -57,6 +57,12 @@
                         Bloque {{ bloque }}
                     </button>
                     {% endfor %}
+                    <button class="bloque-btn">
+                        <div class="icon-container">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        Añadir Propietario
+                    </button> 
                 </div>
     
                 <!-- Detalles de los propietarios -->
@@ -78,11 +84,24 @@
                                             <p>Dirección: {{ propietario[6] }}</p>
                                             <p>Parq: {{propietario[7] }}</p>
                                             <p>Correo: {{ propietario[8] }}</p>
+                                            <p class="estado_propietario">Estado: {{ propietario[16]}}</p>
                                         </div>
                                         <div class="cont_boton">
                                             <button class="boton" onclick="abrirModalEditarPropietario('{{ propietario[0] }}', '{{ propietario[1] }}', '{{ propietario[2] }}', '{{ propietario[3] }}', '{{ bloque }}', '{{ propietario[4] }}', '{{ propietario[5] }}', '{{ propietario[6] }}', '{{ propietario[7] }}', '{{ propietario[8] }}')">
                                                 <i class="fas fa-edit"></i> <!-- Icono de edición -->
                                                 Editar
+                                            </button>
+                                            <button class="boton" >
+                                                <i class="fas fa-edit"></i> <!-- Icono de edición -->
+                                                 Activar
+                                            </button>
+                                            <button class="boton">
+                                                <i class="fas fa-edit"></i> <!-- Icono de edición -->
+                                                Desactivar
+                                            </button>
+                                            <button class="boton" >
+                                                <i class="fas fa-edit"></i> <!-- Icono de edición -->
+                                                Eliminar
                                             </button>
                                         </div>
                                     </div>

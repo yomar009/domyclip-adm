@@ -146,12 +146,17 @@
   line-height: 0.5; /* Aplicamos el espacio entre líneas específicamente a los elementos p dentro de .texto */
 }
 
+.estado_propietario {
+  color: orange;
+}
+
+
 .cont_boton {
   flex: 20%; /* Ocupa el 30% del espacio */
   text-align: right; /* Alinea el contenido del botón a la derecha */
   display: flex; /* Hacer flexibles los elementos dentro del botón */
   align-items: center; /* Centrar verticalmente el contenido */
-  justify-content: center; /* Alinear el contenido del botón al final */
+  justify-content: space-between; /* Alinear el contenido del botón al final */
 }
 
 .cont_boton i {
@@ -172,7 +177,7 @@
   align-items: center; /* Centra verticalmente el contenido */
   justify-content: center;
   height: 100%;
-  margin-bottom: 10px; /* Espacio entre botones */
+  margin-right: 5px;
 }
 
 .boton:hover {

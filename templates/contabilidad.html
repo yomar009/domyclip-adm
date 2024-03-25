@@ -46,34 +46,88 @@
             <div class="propietarios-section">
                 <!-- Contenido de la sección "Terreno" -->
                 <div class="prop b1">
-                    <h2>Información del Suelo</h2>
-                    <p>Contenido específico para la sección "Terreno" en terreno-info.</p>
-                    <!-- Otros elementos relacionados con la información del suelo -->
+                    <h2>Editar Cuentas por cobrar Pendites</h2>
+                    <p>podras añadir multas a los propietarios que no pudiste en la planilla</p>
+                    <!-- Formulario de filtrado -->
+                    <form action="/contabilidad/{{ edificio_id }}" method="get">
+                        <label for="fecha_emision">Filtrar Fecha de Emisión:</label>
+                        <input type="date" id="fecha_emision" name="fecha_emision">
+                        <label for="user_id">Filtrar Usuario ID:</label>
+                        <input type="number" id="user_id" name="user_id" placeholder="ID del usuario">
+                        <button type="submit">Buscar </button>
+                    </form>
+
+                    
+                    <!-- Mostrar cuentas por cobrar -->
+                    {% for cuenta in cuentas_por_cobrar %}
+                        <div class="">
+                            <div class="texto">
+                                <h2>Cuenta por cobrar: 0{{ cuenta.id_CXC }}</h2>
+                                <p>Usuario ID: {{ cuenta.user_id }}</p>
+                                <p>Usuario: {{ cuenta.usuario }}</p>
+                                <p>Fecha de Emisión: {{ cuenta.fecha_emision }} </p>
+                                <p>Fecha de Vencimiento: {{ cuenta.fecha_vencimiento }}</p>
+                                <p class="estado_propietario">Estado: {{ cuenta.estado }}</p>
+                                <h3>Detalles:</h3>
+                                <ul>
+                                    {% for detalle in cuenta.detalles %}
+                                    <div class="detalle">
+                                        <li>
+                                            {{ detalle.tipo }},
+                                            Descripción: {{ detalle.descripcion }},
+                                            Monto: {{ detalle.monto }}, 
+                                            Pagado: {{ detalle.pagado }},
+                                            Total: {{ detalle.total }}
+                                        </li>
+                                        <form action="/editar_detalle_cxc" method="post">
+                                            <input type="hidden" name="detalle_id" value="{{ detalle.detalle_id }}"> <!-- Asegúrate de tener un campo para el ID del detalle -->
+                                            <input type="hidden" name="edificio_id" value="{{ edificio_id }}"> 
+                                            <input type="text" name="descripcion" placeholder="Editar Descripción">
+                                            <input type="number" name="monto" placeholder="Editar Monto">
+                                            <button class="boton_edit" type="submit">Editar item</button>
+                                        </form>
+                                        <form action="/eliminar_detalle_cxc" method="post">
+                                            <input type="hidden" name="detalle_id" value="{{ detalle.detalle_id }}"> <!-- Asegúrate de tener un campo para el ID del detalle -->
+                                            <input type="hidden" name="edificio_id" value="{{ edificio_id }}"> 
+                                            <button class="boton_edit" type="submit">Eliminar item</button>
+                                        </form>
+                                    </div>
+                                {% endfor %}                                
+                                </ul>
+                            </div>
+                        </div>                    
+                        <div class="cont_boton">
+                            <button class="boton">
+                                <i class="fas fa-check"></i> <!-- Icono para añadir -->
+                                Contabilizar
+                            </button>
+                            <!-- Formulario para añadir detalles -->
+                            <form action="/crear_deuda" method="post">
+                                <input type="hidden" name="id_CXC" value="{{ cuenta.id_CXC }}">
+                                <input type="hidden" name="user_id" value="{{ cuenta.user_id }}">
+                                <input type="hidden" name="estado" value="pendiente">
+                                <input type="hidden" name="edificio_id" value="{{ edificio_id }}"> 
+                                <input type="text" name="descripcion" placeholder="Descripción">
+                                <input type="number" name="monto" placeholder="Monto">
+                                <button class="boton" type="submit" name="tipo" value="MUL">Agregar Multa</button>
+                                <button class="boton" type="submit" name="tipo" value="EXT">Agregar Cuota Extra</button>
+                            </form>
+                            <form action="/eliminar_cxc" method="post">
+                                <input type="hidden" name="id_CXC" value="{{ cuenta.id_CXC }}">
+                                <input type="hidden" name="user_id" value="{{ cuenta.user_id }}">
+                                <input type="hidden" name="edificio_id" value="{{ edificio_id }}"> 
+                                <button class="boton" type="submit">
+                                    <i class="fas fa-trash"></i> <!-- Icono para eliminar -->
+                                    Eliminar CXC
+                                </button>
+                            </form>
+                        </div>
+                    {% endfor %}
                 </div>
                 <div class="prop b2">
-                    <h2>Sensores de Humedad</h2>
-                    <p>Contenido específico para la sección "Terreno" en terreno-humedad.</p>
+                    <h2>Contabilidad</h2>
+                    <p>Contenido específico para la sección "contabilidad" en estrcutura.</p>
                     <!-- Otros elementos relacionados con los sensores de humedad -->
-                </div>
-                <div class="prop b3">
-                    <h2>Control de Riego</h2>
-                    <p>Contenido específico para la sección "Terreno" en terreno-control-riego.</p>
-                    <!-- Otros elementos relacionados con el control de riego -->
-                </div>
-                <div class="prop b4">
-                    <h2>Mapa del Terreno</h2>
-                    <p>Contenido específico para la sección "Terreno" en terreno-mapa.</p>
-                    <!-- Otros elementos relacionados con el mapa del terreno -->
-                </div>
-                <div class="prop b5">
-                    <h2>Estadísticas del Terreno</h2>
-                    <p>Contenido específico para la sección "Terreno" en terreno-estadisticas.</p>
-                    <!-- Otros elementos relacionados con las estadísticas del terreno -->
-                </div>
-                <div class="prop b6">
-                    <h2>Herramientas de Jardinería</h2>
-                    <p>Contenido específico para la sección "Terreno" en terreno-herramientas.</p>
-                    <!-- Otros elementos relacionados con las herramientas de jardinería -->
                 </div>
             </div>
         </div>

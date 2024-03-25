@@ -44,7 +44,11 @@
     <main class="main">
         <div class="circulo">
             <div class="titulo">
-                <h1>Cuentas por Cobrar de {{ nombre_edificio }}</h1>
+                <h1>Crear y editar planillas de {{ nombre_edificio }}</h1>
+            </div>
+            <div class="prop b2">
+                <h2>Plantilla de Cuentas por Cobrar</h2>
+                <p>Encontraras a todos tus propietarios con valores predeterminados</p>
             </div>
             <div class="propietarios-section">
                 <!-- Botones de bloque en la parte superior -->
@@ -57,8 +61,20 @@
                         Bloque {{ bloque }}
                     </button>
                     {% endfor %}
+                    <button class="bloque-btn" onclick="abrirModalCrearPlantilla('{{ edificio_id }}')">
+                        <div class="icon-container">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        Cambiar fechas
+                    </button>                    
+                    <button class="bloque-btn" onclick="abrirModalCalcularIntereses('{{ edificio_id }}')">
+                        <div class="icon-container">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        Calcular intereses
+                    </button>  
                 </div>
-    
+
                 <!-- Detalles de los propietarios -->
                 {% for bloque, propietarios in propietarios_por_bloque.items() %}
                 <div class="bloque" id="bloque{{ bloque }}" style="display: none;">
@@ -75,17 +91,22 @@
                                             <p>Bloque: {{ bloque }}</p>
                                             <p>Cuota fija de Administracion: {{ propietario[9] }}</p>
                                             <p>Cuota fija de Parqueadero: {{ propietario[10] }}</p>
-                                            <p>Cuota extra: {{ propietario[11] }}</p>
+                                            <p>Cuota extra fija: {{ propietario[11] }}</p>
+                                            <p>Multa inasistencia AS: {{ propietario[12] }}</p>
+                                            <p>Intereses: {{ propietario[13] }}</p>
+                                            <p>Fecha Emision: {{ propietario[14] }}</p>
+                                            <p>Fecha Vencimiento: {{ propietario[15] }}</p>
+                                            <p class="estado_propietario">Estado: {{propietario[16]}}</p>
                                         </div>
                                         <div class="cont_boton">
-                                            <button class="boton" onclick="abrirModalEditarPropietario('{{ propietario[0] }}', '{{ propietario[9] }}', '{{ propietario[10] }}', '{{ propietario[11] }}')">
+                                            <button class="boton" onclick="abrirModalEditarPropietario('{{ propietario[0] }}', '{{ propietario[9] }}', '{{ propietario[10] }}', '{{ propietario[11] }}', '{{ propietario[12] }}', '{{ propietario[13] }}', '{{ propietario[14] }}', '{{ propietario[15] }}', '{{ propietario[16] }}', '{{ edificio_id }}')">
                                                 <i class="fas fa-edit"></i> <!-- Icono de edición -->
                                                 Editar
                                             </button>
-                                                <!-- Agrega el botón de "Multa" -->
-                                            <button class="boton" onclick="abrirModalAñadirMulta('{{ propietario[0] }}')">
-                                                <i class="fas fa-plus"></i> <!-- Icono para añadir -->
-                                                Multa
+                                                <!-- Agrega el cuenta de cobro manual -->
+                                            <button class="boton" onclick="Cobrar()">
+                                                <i class="fas fa-check"></i> <!-- Icono para añadir -->
+                                                Crear CXC Manual
                                             </button>
                                         </div>
                                     </div>
@@ -96,25 +117,19 @@
                     </div>
                 </div>
                 {% endfor %}
-                <!-- Botón para buscar propietario y abrir el modal -->
-                <div class="prop b1">
-                    <h2>Multas Aplicadas</h2>
-                    <ul>
-                        {% for multa in multas %}
-                            <li>Fecha: {{ multa.fecha }}, Apto: {{ multa.apto }}, Bloque: {{ multa.bloque }}, Multa: {{ multa.Multa }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                
                 <div class="prop b2">
-                    <h2>Intereses Aplicados</h2>
-                    <ul>
-                        {% for interes in intereses %}
-                            <li>Fecha: {{ interes.fecha }}, Apto: {{ interes.apto }}, Bloque: {{ interes.bloque }}, Interes: {{ interes.Interes }}</li>
-                        {% endfor %}
-                    </ul>
+                    <h2>Crear plantilla de Cuentas por Cobrar</h2>
+                    <p>Este boton creara de las cuentas por cobrar segun los valores definidos en la informacion del usuario estas cuentas quedaran por defecto en pedientes</p>
+                    <button class="bloque-btn" onclick="location.href='/contabilizar_automatico/{{ edificio_id }}/'">
+                        <div class="icon-container">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        Crear toda la plantilla de CXC automatico
+                    </button>  
                 </div>
-                </div>                              
+                <!-- Botón para buscar propietario y abrir el modal -->
+
+                
             </div>
         </div>
     </main>
@@ -126,33 +141,45 @@
             <h2>Editar Cobros</h2>
             <form id="formularioEditarPropietario" method="POST" action="/actualizar_cobros">
                 <!-- Campos ocultos para enviar el user_id y los nuevos valores -->
+                <input type="hidden" id="modal_edificio_id" name="modal_edificio_id">
                 <input type="hidden" id="user_id" name="user_id">
-                <label for="valoradmin">Valor de Administración:</label> <!-- Campo Admin -->
-                <input type="text" id="valoradmin" name="valoradmin">
-                <label for="valorparq">Valor de Parqueadero:</label> <!-- Campo Parq -->
-                <input type="text" id="valorparq" name="valorparq">
-                <label for="cuotaextra">Valor de Cuota Extra:</label> <!-- Campo cuota extra-->
-                <input type="text" id="cuotaextra" name="cuotaextra">
+                <label for="cuotaADM">Valor de Administración:</label> <!-- Campo Admin -->
+                <input type="text" id="cuotaADM" name="cuotaADM">
+                <label for="cuotaPARQ">Valor de Parqueadero:</label> <!-- Campo Parq -->
+                <input type="text" id="cuotaPARQ" name="cuotaPARQ">
+                <label for="cuotaEXT">Valor de Cuota Extra:</label> <!-- Campo cuota extra-->
+                <input type="text" id="cuotaEXT" name="cuotaEXT">
+                <label for="multa">Multa:</label> <!-- Campo Multa-->
+                <input type="text" id="multa" name="multa">
+                <label for="intereses">Intereses:</label> <!-- Campo Intereses-->
+                <input type="text" id="intereses" name="intereses">
+                <label for="fecha_emision">Fecha Emision:</label> <!-- Campo fecha_emision-->
+                <input type="text" id="fecha_emision" name="fecha_emision">
+                <label for="fecha_vencimiento">Fecha Vencimiento:</label> <!-- Campo fecha_vencimientos-->
+                <input type="text" id="fecha_vencimiento" name="fecha_vencimiento">
+                <label for="estado">Estado:</label> <!-- Campo fecha_vencimientos-->
+                <input type="text" id="estado" name="estado">
                 <button class="boton" type="submit" onclick="guardarCambios()">Guardar Cambios</button>
             </form>
         </div>
     </div>
 
-    <!-- Modal para añadir multa -->
-    <div id="añadirMultaModal" class="modal">
+    <div id="crearPlantillaModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="cerrarModalAñadirMulta()">&times;</span>
-            <h2>Añadir Multa</h2>
-            <!-- Aquí iría el formulario para añadir la multa -->
-            <form id="formularioAñadirMulta" method="POST" action="/añadir_multa">
-                <!-- Campos del formulario para añadir la multa -->
-                <input type="hidden" id="user_id_multa" name="user_id">
-                <label for="monto_multa">Monto de la Multa:</label>
-                <input type="text" id="monto_multa" name="monto">
-                <button class="boton" type="submit" onclick="guardarMulta()">Guardar Multa</button>
+            <span class="close" onclick="cerrarModalCrearPlantilla()">&times;</span>
+            <h2>Cmabiar fechas de plantillas</h2>
+            <form id="formularioCrearPlantilla" method="POST" action="/crear_plantilla">
+                <!-- Campo oculto para enviar el edificio_id -->
+                <input type="hidden" id="edificio_id" name="edificio_id">
+                <label for="fecha_emision">Fecha de Emisión:</label>
+                <input type="date" id="fecha_emision" name="fecha_emision">
+                <label for="fecha_vencimiento">Fecha de Vencimiento:</label>
+                <input type="date" id="fecha_vencimiento" name="fecha_vencimiento">
+                <button class="boton" type="submit" onclick="guardarPlantilla()">Crear Plantilla</button>
             </form>
         </div>
     </div>
+    
 
     <section class="sidebar">
         <div class="menu">
@@ -213,19 +240,24 @@
             }
         }
 
-        function abrirModalEditarPropietario(user_id, valoradmin, valorparq, cuotaextra) {
+        function abrirModalEditarPropietario(user_id, cuotaADM, cuotaPARQ, cuotaEXT, multa, intereses, fecha_emision, fecha_vencimiento, estado, edificio_id) {
             var modal = document.getElementById("editarPropietarioModal");
             var form = document.getElementById("formularioEditarPropietario");
-        
+            
+            document.getElementById("modal_edificio_id").value = edificio_id;
             // Llenar los campos del formulario con los datos del propietario a editar
             document.getElementById("user_id").value = user_id;
-            document.getElementById("valoradmin").value = valoradmin; // Establecer el valor del campo "Admin"
-            document.getElementById("valorparq").value = valorparq; // Establecer el valor del campo "Parq"
-            document.getElementById("cuotaextra").value = cuotaextra; // Establecer el valor del campo "Parq"
-        
+            document.getElementById("cuotaADM").value = cuotaADM; // Establecer el valor del campo "Admin"
+            document.getElementById("cuotaPARQ").value = cuotaPARQ; // Establecer el valor del campo "Parq"
+            document.getElementById("cuotaEXT").value = cuotaEXT; // Establecer el valor del campo "Cuota Extra"
+            document.getElementById("multa").value = multa; // Establecer el valor del campo "Multa"
+            document.getElementById("intereses").value = intereses; // Establecer el valor del campo "Intereses"
+            document.getElementById("fecha_emision").value = fecha_emision; // Establecer el valor del campo "fecha_emision"
+            document.getElementById("fecha_vencimiento").value = fecha_vencimiento; // Establecer el valor del campo "fecha_vencimiento"
+            document.getElementById("estado").value = estado; // Establecer el valor del campo "estado"
             // Mostrar el modal
             modal.style.display = "block";
-        }
+        }        
         function guardarCambios() {
             // Cerrar el modal
             cerrarModalEditarPropietario();
@@ -239,29 +271,26 @@
         }
 
 
-
-        // Función para abrir el modal para añadir multa
-        function abrirModalAñadirMulta(user_id) {
-            var modal = document.getElementById("añadirMultaModal");
-            // Aquí podrías agregar lógica adicional para buscar al propietario antes de abrir el modal
-            document.getElementById("user_id_multa").value = user_id; // Establece el user_id en el formulario
+        function abrirModalCrearPlantilla(edificio_id) {
+            var modal = document.getElementById("crearPlantillaModal");
+            // Llenar el campo oculto con el edificio_id
+            document.getElementById("edificio_id").value = edificio_id;
+            // Mostrar el modal
             modal.style.display = "block";
         }
-
-        // Función para cerrar el modal para añadir multa
-        function cerrarModalAñadirMulta() {
-            var modal = document.getElementById("añadirMultaModal");
+        function guardarPlantilla() {
+            //Cerrar el modal
+            cerrarModalCrearPlantilla();
+            // Mostrar mensaje de confirmación
+            alert("La plantilla ha sido creada."); // Mensaje de confirmación
+        }
+        function cerrarModalCrearPlantilla() {
+            var modal = document.getElementById("crearPlantillaModal");
+            // Cerrar el modal
             modal.style.display = "none";
         }
 
-        // Función para guardar la multa
-        function guardarMulta() {
-            // Aquí podrías agregar la lógica para enviar el formulario y guardar la multa en el servidor
-            cerrarModalAñadirMulta();
-            alert("La multa se guardará una vez que se actualice la página.");
-        }
-
-
+        
 
         // Función para actualizar ambas gráficas
 
