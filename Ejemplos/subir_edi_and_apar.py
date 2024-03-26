@@ -52,7 +52,7 @@ def crear_tabla_propietarios(cursor):
         CREATE TABLE IF NOT EXISTS Propietarios (
             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
             edificio_id INTEGER NOT NULL,
-            apto TEXT,
+            apto TEXT NOT NULL,
             bloque TEXT NOT NULL,
             nombres TEXT NOT NULL,
             apellidos TEXT NOT NULL,

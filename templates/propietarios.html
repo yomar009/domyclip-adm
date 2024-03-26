@@ -57,7 +57,7 @@
                         Bloque {{ bloque }}
                     </button>
                     {% endfor %}
-                    <button class="bloque-btn">
+                    <button class="bloque-btn" onclick="abrirModalAgregarPropietario()">
                         <div class="icon-container">
                             <i class="fas fa-user"></i>
                         </div>
@@ -91,18 +91,20 @@
                                                 <i class="fas fa-edit"></i> <!-- Icono de edición -->
                                                 Editar
                                             </button>
-                                            <button class="boton" >
-                                                <i class="fas fa-edit"></i> <!-- Icono de edición -->
-                                                 Activar
-                                            </button>
-                                            <button class="boton">
-                                                <i class="fas fa-edit"></i> <!-- Icono de edición -->
-                                                Desactivar
-                                            </button>
-                                            <button class="boton" >
-                                                <i class="fas fa-edit"></i> <!-- Icono de edición -->
-                                                Eliminar
-                                            </button>
+                                            <form action="/accion" method="post">
+                                                <input type="hidden" name="edificio_id" value="{{ edificio_id }}">
+                                                <input type="hidden" name="user_id" value="{{ propietario[0] }}"> <!-- Agregar user_id aquí -->
+                                                
+                                                <button class="boton" type="submit" name="accion" value="activar">
+                                                    <i class="fas fa-edit"></i> Activar
+                                                </button>
+                                                <button class="boton" type="submit" name="accion" value="desactivar">
+                                                    <i class="fas fa-edit"></i> Desactivar
+                                                </button>
+                                                <button class="boton" type="submit" name="accion" value="eliminar">
+                                                    <i class="fas fa-edit"></i> Eliminar
+                                                </button>
+                                            </form>                                                                                    
                                         </div>
                                     </div>
                                 </div>
@@ -147,49 +149,88 @@
         </form>
     </div>
 </div>
+<!-- Formulario emergente para agregar propietario -->
+<div id="agregarPropietarioModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrarModalAgregarPropietario()">&times;</span>
+        <h2>Agregar Propietario</h2>
+        <form id="formularioAgregarPropietario" method="POST" action="/agregar_propietario">
+            <!-- Campos del formulario para agregar un nuevo propietario -->
+            <input type="hidden" id="edificio_id_modal" name="edificio_id">
+            <label for="nombre">Nombres:</label>
+            <input type="text" id="nombre" name="nombre">
+            <label for="apellido">Apellidos:</label>
+            <input type="text" id="apellido" name="apellido">
+            <label for="apartamento_id">Apartamento:</label>
+            <input type="text" id="apartamento_id" name="apartamento_id">
+            <label for="bloque_id">Bloque:</label>
+            <input type="text" id="bloque_id" name="bloque_id">
+            <label for="cedula">Cédula:</label>
+            <input type="text" id="cedula" name="cedula">
+            <label for="celular">Número Celular:</label>
+            <input type="text" id="celular" name="celular">
+            <label for="direccion">Dirección:</label>
+            <input type="text" id="direccion" name="direccion">
+            <label for="parq">Parq:</label>
+            <input type="text" id="parq" name="parq">
+            <label for="correo">Correo:</label>
+            <input type="email" id="correo" name="correo">
+            <!-- Campo para el estado -->
+            <input type="hidden" id="estado" name="estado" value="1"> <!-- Valor por defecto True -->
+            <button class="boton" type="submit">Agregar Propietario</button>
+        </form>
+    </div>
+</div>
 
 
 
-    <section class="sidebar">
-        <div class="menu">
+<section class="sidebar">
+    <div class="menu">
+        <a href="/estadisticas/{{ edificio_id }}" class="enlace">
+            <i class="fas fa-chart-pie"></i>
+            <span>Estadísticas</span>
+        </a>                     
+        <a href="/propietarios/{{ edificio_id }}" class="enlace activo">
+            <i class="fas fa-home"></i>
+            <span>Propietarios</span>
+        </a>
+        <a href="/cobros/{{ edificio_id }}" class="enlace">
+            <i class="fas fa-money-check-alt"></i>
+            <span>Cobros</span>
+        </a>
+        <a href="/pagos/{{ edificio_id }}" class="enlace">
+            <i class="fas fas fa-credit-card"></i>
+            <span>pagos</span>
+        </a>
+        <a href="/pendiente/{{ edificio_id }}" class="enlace">
+            <i class="fas fa-tasks"></i>
+            <span>Pendiente</span>
+        </a>
+        <a href="/contabilizado/{{ edificio_id }}" class="enlace">
+            <i class="fas fa-book"></i>
+            <span>Contabilizado</span>
+        </a>
+        <a href="/informes/{{ edificio_id }}" class="enlace">
+            <i class="fas fa-file-alt"></i>
+            <span>Informes</span>
+        </a>
+        <a href="/configuracion/{{ edificio_id }}" class="enlace">
+            <i class="fas fa-cogs"></i>
+            <span>Configuración</span>
+        </a>            
 
-            <a href="/estadisticas/{{ edificio_id }}" class="enlace">
-                <i class="fas fa-chart-pie"></i>
-                <span>Estadísticas</span>
-            </a>                     
-            <a href="" class="enlace activo">
-                <i class="fas fa-home"></i>
-                <span>Propietarios</span>
-            </a>
-            <a href="/pagos/{{ edificio_id }}" class="enlace">
-                <i class="fas fa-money-check-alt"></i>
-                <span>Cobros</span>
-            </a>
-            <a href="/contabilidad/{{ edificio_id }}" class="enlace">
-                <i class="fas fa-book"></i>
-                <span>Contabilidad</span>
-            </a>
-            <a href="/informes/{{ edificio_id }}" class="enlace">
-                <i class="fas fa-file-alt"></i>
-                <span>Informes</span>
-            </a>
-            <a href="/configuracion/{{ edificio_id }}" class="enlace">
-                <i class="fas fa-cogs"></i>
-                <span>Configuración</span>
-            </a>
-            
-            <div class="enlace" onclick="webdomotycort()">
-                <i class="fas fa-globe"></i>
-                <span>Nosotros</span>
-            </div>
-            <div class="cerrar">
-                <a href="{{ url_for('logout') }}">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Cerrar Sesión</span>
-                </a>
-            </div>
+        <div class="enlace" onclick="webdomotycort()">
+            <i class="fas fa-globe"></i>
+            <span>Nosotros</span>
         </div>
-    </section>
+        <div class="cerrar">
+            <a href="{{ url_for('logout') }}">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar Sesión</span>
+            </a>
+        </div>
+    </div>
+</section>
 
     <script>
 
@@ -233,7 +274,6 @@
             modal.style.display = "block";
 
         }
-
         function guardarCambios() {
             // Cerrar el modal
             cerrarModalEditarPropietario();
@@ -245,6 +285,26 @@
             var modal = document.getElementById("editarPropietarioModal");
             modal.style.display = "none";
         }
+
+
+
+        // Función para abrir el modal de agregar propietario
+        function abrirModalAgregarPropietario() {
+            var modal = document.getElementById("agregarPropietarioModal");
+            var edificioId = "{{ edificio_id }}"; // Obtener el edificio_id del contexto de la plantilla
+
+            // Establecer el edificio_id en el campo oculto del formulario en el modal
+            document.getElementById("edificio_id_modal").value = edificioId;
+
+            modal.style.display = "block";
+        }
+        
+        // Función para cerrar el modal de agregar propietario
+        function cerrarModalAgregarPropietario() {
+            var modal = document.getElementById("agregarPropietarioModal");
+            modal.style.display = "none";
+        }
+
 
         // Función para redireccionar a una página externa
         function webdomotycort() {
