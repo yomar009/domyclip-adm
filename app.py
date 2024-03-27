@@ -629,9 +629,67 @@ def pagos(edificio_id):
     for bloque in bloques:
         propietarios_por_bloque[bloque] = obtener_propietarios_por_bloque(edificio_id, bloque)
     
+    # Obtener los datos de los bancos y la estructura de pago para RC del 1 al 5
+    datos_edificio = obtener_datos_edificio(edificio_id)
+    bancos = datos_edificio[:5]
+    estructura_rc = datos_edificio[5:]
+    
     return render_template('pagos.html', edificio_id=edificio_id, user_id=user_id, nombre_edificio=nombre_edificio,
                            username=username, bloques=bloques, propietarios_por_bloque=propietarios_por_bloque,
-                           )
+                           bancos=bancos, estructura_rc=estructura_rc)
+
+# Ruta para manejar la creación de un pago
+@app.route('/crear_pago', methods=['POST'])
+def crear_pago():
+    if request.method == 'POST':
+        # Obtener los datos del formulario
+        edificio_id = request.form['edificio_id']
+        user_id = request.form['user_id']
+        fecha = request.form['fecha']
+        descripcion = request.form['descripcion']
+        tipopago = request.form['tipopago']
+        valor = request.form['valor']
+        estado = request.form['estado']
+
+        # Aquí puedes agregar la lógica para guardar los datos en la base de datos o hacer cualquier otro procesamiento necesario
+        
+        # En este ejemplo, simplemente mostraremos los datos recibidos
+        return f"Pago creado: edificio_id={edificio_id}, user_id={user_id}, fecha={fecha}, descripción={descripcion}, tipo de pago={tipopago}, valor={valor}, estado={estado}"
+
+# Ruta para manejar la creación de una cuenta de cobro manual
+@app.route('/crear_rc_manual', methods=['POST'])
+def crear_rc_manual():
+    if request.method == 'POST':
+        # Obtener los datos del formulario
+        user_id = request.form['user_id']
+        edificio_id = request.form['edificio_id']
+
+        # Aquí puedes agregar la lógica para crear la cuenta de cobro manual en la base de datos o realizar cualquier otro procesamiento necesario
+        
+        # En este ejemplo, simplemente mostraremos los datos recibidos
+        return f"Cuenta de cobro manual creada: user_id={user_id}, edificio_id={edificio_id}"
+
+
+# Función para obtener los datos de los bancos y la estructura de pago para RC del 1 al 5
+def obtener_datos_edificio(edificio_id):
+    # Conexión a la base de datos
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    
+    # Consulta para obtener los datos de los bancos y la estructura de pago para RC del 1 al 5
+    cursor.execute('''
+        SELECT Banco1, Banco2, Banco3, Banco4, Banco5,
+               estrucRC1, estrucRC2, estrucRC3, estrucRC4, estrucRC5
+        FROM Edificios
+        WHERE edificio_id = ?
+    ''', (edificio_id,))
+    
+    # Obtener los resultados de la consulta
+    datos_edificio = cursor.fetchone()
+    # Cerrar la conexión a la base de datos
+    conn.close()
+    
+    return datos_edificio
 
 # Ruta para manejar la solicitud POST y contabilizar
 @app.route('/contabilizar_unitario', methods=['POST'])
